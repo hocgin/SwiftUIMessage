@@ -31,5 +31,11 @@ public extension MailComposeView {
 
         /// The preferred filename to associate with the data. This is the default name applied to the file when it is transferred to its destination. Any path separator (/) characters in the filename are converted to underscore (\_) characters prior to transmission.
         var fileName: String
+
+        public init(attachment: Data, mimeType: String, fileName: String) {
+            self.attachment = attachment
+            self.mimeType = mimeType
+            self.fileName = fileName
+        }
     }
 }
