@@ -1,13 +1,13 @@
 //
 //  MailComposeView.swift
-//  
+//
 //
 //  Created by Edon Valdman on 3/2/23.
 //
 
-import SwiftUI
-import MessageUI
 import Messages
+import MessageUI
+import SwiftUI
 
 /// To be notified of the `View`'s completion and to obtain its completion result, register as an observer of the `Notifiction.Name.MailComposeViewDidFinish` notification.
 public struct MailComposeView: UIViewControllerRepresentable {
@@ -50,9 +50,7 @@ public struct MailComposeView: UIViewControllerRepresentable {
         return composeVC
     }
     
-    public func updateUIViewController(_ uiViewController: MFMailComposeViewController, context: Context) {
-        
-    }
+    public func updateUIViewController(_ uiViewController: MFMailComposeViewController, context: Context) {}
     
     public func makeCoordinator() -> MCCoordinator {
         MCCoordinator(self)
@@ -65,14 +63,14 @@ public struct MailComposeView: UIViewControllerRepresentable {
 
 // MARK: - MFMailComposeViewControllerDelegate
 
-extension MailComposeView {
-    public static let DidFinishResultKey = "SwiftUIMessage.MailComposeViewDidFinishResultKey"
-    public static let DidFinishErrorKey = "SwiftUIMessage.MailComposeViewDidFinishErrorKey"
+public extension MailComposeView {
+    static let DidFinishResultKey = "SwiftUIMessage.MailComposeViewDidFinishResultKey"
+    static let DidFinishErrorKey = "SwiftUIMessage.MailComposeViewDidFinishErrorKey"
     
-    public class MCCoordinator: NSObject, MFMailComposeViewControllerDelegate {
-        internal var parent: MailComposeView
+    class MCCoordinator: NSObject, MFMailComposeViewControllerDelegate {
+        var parent: MailComposeView
         
-        internal init(_ parent: MailComposeView) {
+        init(_ parent: MailComposeView) {
             self.parent = parent
         }
         
@@ -85,7 +83,8 @@ extension MailComposeView {
                 userInfo: [
                     MailComposeView.DidFinishResultKey: result,
                     MailComposeView.DidFinishErrorKey: error as Any
-                ])
+                ]
+            )
             
             controller.dismiss(animated: true)
         }
@@ -94,9 +93,9 @@ extension MailComposeView {
 
 // MARK: - Initial Message Info
 
-extension MailComposeView {
+public extension MailComposeView {
     /// Used to set mail fields programmatically.
-    public struct MailInfo {
+    struct MailInfo {
         public init(subject: String? = nil, toRecipients: [String]? = nil, ccRecipients: [String]? = nil, bccRecipients: [String]? = nil, body: String = "", bodyIsHTML: Bool = false, preferredSendingEmailAddress: String? = nil) {
             self.subject = subject ?? ""
             self.toRecipients = toRecipients
@@ -153,12 +152,12 @@ extension MailComposeView {
 
 // MARK: - Convenience Access to Class Functions
 
-extension MailComposeView {
+public extension MailComposeView {
     /// Returns a Boolean that indicates whether the current device is able to send email.
     ///
     /// You should call this method before attempting to display the mail composition interface. If it returns false, you must not display the mail composition interface.
     /// - Returns: `true` if the device is configured for sending email or `false` if it is not.
-    public static func canSendMail() -> Bool {
+    static func canSendMail() -> Bool {
         MFMailComposeViewController.canSendMail()
     }
 }
@@ -167,7 +166,7 @@ struct MailComposeView_Previews: PreviewProvider {
     static var previews: some View {
         if #available(iOS 14.0, *) {
             MailComposeView(.init(
-//                recipients: [
+                //                recipients: [
 //                "7863273437",
 //                "edon@valdman.works"
 //            ],

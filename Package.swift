@@ -7,13 +7,14 @@ let package = Package(
     name: "SwiftUIMessage",
     platforms: [
         .iOS(.v13),
-        .macCatalyst(.v13)
+        .macCatalyst(.v13),
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "SwiftUIMessage",
-            targets: ["SwiftUIMessage"]),
+            targets: ["SwiftUIMessage"]
+        ),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -25,10 +26,15 @@ let package = Package(
         .target(
             name: "SwiftUIMessage",
             dependencies: [],
-            resources: [.copy("../PrivacyInfo.xcprivacy")]
+            resources: [.copy("../PrivacyInfo.xcprivacy")],
+            linkerSettings: [
+                .linkedFramework("MessageUI"),
+                .linkedFramework("Messages"),
+            ]
         ),
         .testTarget(
             name: "SwiftUIMessageTests",
-            dependencies: ["SwiftUIMessage"]),
+            dependencies: ["SwiftUIMessage"]
+        ),
     ]
 )
