@@ -7,7 +7,9 @@
 
 import SwiftUI
 import MessageUI
+#if canImport(Messages)
 import Messages
+#endif
 
 /// To be notified of the `View`'s completion and to obtain its completion result, register as an observer of the `Notification.Name.MessageComposeViewDidFinish` notification.
 public struct MessageComposeView: UIViewControllerRepresentable {
@@ -49,7 +51,9 @@ public struct MessageComposeView: UIViewControllerRepresentable {
         }
         
         composeVC.body = initialMessageInfo.body
+        #if canImport(Messages)
         composeVC.message = initialMessageInfo.message
+        #endif
 
         if disableUserAttachments {
             composeVC.disableUserAttachments()
@@ -120,8 +124,7 @@ extension MessageComposeView {
         public init(
             recipients: [String]? = nil,
             subject: String? = nil,
-            body: String? = nil,
-            message: MSMessage? = nil
+            body: String? = nil
         ) {
             self.recipients = recipients?.map {
                 $0
@@ -131,8 +134,21 @@ extension MessageComposeView {
             }
             self.subject = subject
             self.body = body
+        }
+        
+        #if canImport(Messages)
+        @available(iOS 13.0, macCatalyst 13.0, *)
+        public init(
+            recipients: [String]? = nil,
+            subject: String? = nil,
+            body: String? = nil,
+            message: MSMessage?
+        ) {
+            self.init(recipients: recipients, subject: subject, body: body)
             self.message = message
         }
+        #endif
+        
         
         /// An array of strings that contains the initial recipients of the message.
         ///
@@ -151,6 +167,7 @@ extension MessageComposeView {
         /// If you want to provide initial content in the body of a message, do so before you display it. After the message is displayed you cannot change the value of this property.
         public var body: String?
         
+        #if canImport(Messages)
         /// A message object from your iMessage app extension.
         ///
         /// If your app has an iMessage app extension, you can display your iMessage app within the message compose view, just as you would in the Messages app. To display your iMessage app, create and assign an [MSMessage](https://developer.apple.com/documentation/messages/msmessage) object to this property.
@@ -159,6 +176,7 @@ extension MessageComposeView {
         ///
         /// For more information on creating iMessage apps, see [Messages](https://developer.apple.com/documentation/messages).
         public var message: MSMessage?
+        #endif
     }
 }
 
