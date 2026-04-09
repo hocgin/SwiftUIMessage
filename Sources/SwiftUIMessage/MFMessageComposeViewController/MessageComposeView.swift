@@ -117,7 +117,12 @@ extension MessageComposeView {
 extension MessageComposeView {
     /// Used to set the initial message information.
     public struct MessageInfo: Hashable {
-        public init(recipients: [String]? = nil, subject: String? = nil, body: String? = nil, message: MSMessage? = nil) {
+        public init(
+            recipients: [String]? = nil,
+            subject: String? = nil,
+            body: String? = nil,
+            message: MSMessage? = nil
+        ) {
             self.recipients = recipients?.map {
                 $0
                     .trimmingCharacters(in: .whitespacesAndNewlines)
