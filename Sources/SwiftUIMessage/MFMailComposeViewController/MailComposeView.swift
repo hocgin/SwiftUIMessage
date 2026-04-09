@@ -7,7 +7,6 @@
 
 import SwiftUI
 import MessageUI
-import Messages
 
 /// To be notified of the `View`'s completion and to obtain its completion result, register as an observer of the `Notifiction.Name.MailComposeViewDidFinish` notification.
 public struct MailComposeView: UIViewControllerRepresentable {
